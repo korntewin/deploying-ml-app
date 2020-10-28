@@ -1,0 +1,8 @@
+tox
+seaborn
+numpy
+pandas
+sklearn
+jupyter
+ipykernel
+matplotlib
