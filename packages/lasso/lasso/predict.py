@@ -5,14 +5,26 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
 
 from lasso.config import config
+from lasso.preprocess.data_management import load_pipeline
 
-# def predict(input_data):
-#     model = joblib.load(cf.MODEL_NAME)
-#     return model.predict(input_data)
 
-# def predict_proba(input_data):
-#     model = joblib.load(cf.MODEL_NAME)
-#     return model.predict_proba(input_data)
+model_name = config.MODEL_NAME
+pipeline = load_pipeline(pipeline_name=model_name)
+
+
+def predict(*, input_data) -> dict:
+    data = pd.read_json(input_data)
+    pred = pipeline.predict(data[config.FEATURES])
+    response = {'predictions': pred}
+    return response
+
+
+def predict_proba(*, input_data) -> dict:
+    data = pd.read_json(input_data)
+    pred = pipeline.predict_proba(data[config.FEATURES])
+    response = {'predictions': pred}
+    return response
+
 
 # if __name__ == '__main__':
     

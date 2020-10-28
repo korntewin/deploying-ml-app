@@ -1,7 +1,5 @@
-import enum
-from re import T
-from numpy.core.defchararray import title
-from numpy.core.fromnumeric import var
+import math
+
 from sklearn.base import TransformerMixin, BaseEstimator
 from sklearn.compose import ColumnTransformer
 from sklearn.impute import SimpleImputer
@@ -34,10 +32,10 @@ class ConvertManyCabinsToOneCabin(BaseEstimator, TransformerMixin):
 
     def get_first_cabin(self, row):
 
-        if row is np.nan:
-            return np.nan
+        if isinstance(row, str):
+            return row.split()[0]
 
-        return row.split()[0]
+        return np.nan
 
     def fit(self, X, y = None):
         return self
@@ -88,7 +86,10 @@ class DropUnecessaryColumn(TransformerMixin):
 
     def transform(self, X):
         df = X.copy()
-        return df.drop(columns=self.variables)
+        columns = df.columns
+        exist_col = list(filter(lambda x: x in columns, self.variables))
+        
+        return df.drop(columns=exist_col)
 
 
 class ReduceCardinality(BaseEstimator,TransformerMixin):
@@ -101,8 +102,7 @@ class ReduceCardinality(BaseEstimator,TransformerMixin):
     def transform(self, X):
         df = X.copy()
         df['cabin'] = df['cabin'].apply(
-            lambda x: np.nan if x is np.nan else ' '.join(re.findall('[a-zA-Z]+', str(x))))
-
+            lambda x: ' '.join(re.findall('[a-zA-Z]+', str(x))) if isinstance(x, str) else np.nan)
         return df
 
 
@@ -171,7 +171,6 @@ class FillCatVars(BaseEstimator, TransformerMixin):
             df[var+'_na'] = np.where(df[var].isnull(), 1, 0)
 
         df[self.variables] = df[self.variables].fillna(self.fill_value)
-
         return df
 
 
@@ -204,13 +203,15 @@ class LogTransformer(BaseEstimator, TransformerMixin):
     
     def __init__(self, variables=None):
         self.variables = variables
+        self.transformer = PowerTransformer()
 
     def fit(self, X, y=None):
+        self.transformer.fit(X[self.variables])
         return self
 
     def transform(self, X):
         df = X.copy()
-        df[self.variables] = PowerTransformer().fit_transform(df[self.variables])
+        df[self.variables] = self.transformer.transform(df[self.variables])
 
         return df
 

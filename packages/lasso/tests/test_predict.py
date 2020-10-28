@@ -1,0 +1,23 @@
+import pandas as pd
+import numpy as np
+
+from lasso import predict
+from lasso.preprocess.data_management import load_dataset
+from lasso.config import config
+from lasso import predict
+
+
+def test_predict():
+
+    file_name = 'test.csv'
+    data = load_dataset(file_name=file_name)
+    test_json = data[0:1].to_json(orient='records')
+    test_results = predict.predict(input_data=test_json)
+
+    assert test_results is not None
+    assert isinstance(test_results['predictions'][0], np.int64)
+    assert test_results['predictions'][0] <= 1
+    assert test_results['predictions'][0] >= 0
+
+if __name__=='__main__':
+    test_predict()

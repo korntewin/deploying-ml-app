@@ -5,7 +5,7 @@ import numpy as np
 
 
 ROOT_PATH = pathlib.Path(lasso.__file__).resolve().parent
-TRAIN_MOEL_DIR = ROOT_PATH/'trained_models'
+TRAIN_MODEL_DIR = ROOT_PATH/'trained_models'
 DATASETS_DIR = ROOT_PATH/'datasets'
 
 
@@ -22,6 +22,23 @@ NUM_COLUMN = ['pclass', 'age', 'sibsp', 'parch', 'fare']
 CONT_NUM_COLUMN = ['age', 'fare']
 CAT_COLUMN_W_NA = ['cabin', 'embarked']
 NUM_COLUMN_W_NA = ['age', 'fare']
+
+TRAIN_FEATURES = list(set(DROP_COLUMN).union(set(CAT_COLUMN)).union(set(NUM_COLUMN)))+['survived']
+TRAIN_FEATURES.remove('title')
+
+FEATURES = [
+    'pclass',
+    'name',
+    'sex',
+    'age',
+    'sibsp',
+    'parch',
+    'ticket',
+    'fare',
+    'cabin',
+    'embarked'
+]
+
 TARGET = ['survived']
 
 
@@ -31,4 +48,4 @@ N_ITER = 50
 
 
 if __name__ == '__main__':
-    print(ROOT_PATH)
+    print(FEATURES)
