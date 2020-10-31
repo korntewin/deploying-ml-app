@@ -1,0 +1,2 @@
+flask==1.1.2
+-e '/Users/boonchuay/Documents 2/deploying-ml-app/packages/lasso'

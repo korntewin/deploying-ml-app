@@ -3,6 +3,7 @@ import numpy as np
 
 from lasso import predict
 from lasso.preprocess.data_management import load_dataset
+from lasso.preprocess.data_validation import validate_data
 from lasso.config import config
 from lasso import predict
 

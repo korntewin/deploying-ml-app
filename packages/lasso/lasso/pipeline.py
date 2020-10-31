@@ -8,6 +8,7 @@ from scipy.stats import uniform
 from sklearn.preprocessing import PowerTransformer, StandardScaler
 
 from lasso.preprocess import preprocess as pp
+from lasso.preprocess import features
 from lasso.config import config
 
 
@@ -20,7 +21,7 @@ prep_pipeline = Pipeline([
     ('fill_cat_vars', pp.FillCatVars(config.CAT_COLUMN, config.CAT_COLUMN_W_NA, 'Missing')),
     ('remove_rare_label', pp.RareLabelEncoder(config.CAT_COLUMN)),
     ('fill_num_vars', pp.FillNumVars(config.NUM_COLUMN, config.NUM_COLUMN_W_NA)),
-    ('log_transformer', pp.LogTransformer(config.CONT_NUM_COLUMN)),
+    ('log_transformer', features.LogTransformer(config.CONT_NUM_COLUMN)),
     ('ordinal_encoder', pp.OrdinalEncoder(config.CAT_COLUMN)),
     ('scaler', pp.Scaler())
 ])

@@ -1,21 +1,34 @@
 import joblib
+import logging
 
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score
+from sklearn.pipeline import Pipeline
 
 from lasso.config import config
 from lasso.preprocess.data_management import load_pipeline
+from lasso.preprocess.data_validation import validate_data
+from lasso import __version__ as _version
 
 
-model_name = config.MODEL_NAME
+model_name = f"{config.MODEL_NAME}{_version}.pkl"
+_logger = logging.getLogger(__name__)
 pipeline = load_pipeline(pipeline_name=model_name)
 
 
 def predict(*, input_data) -> dict:
     data = pd.read_json(input_data)
+    data = validate_data(data)
+
     pred = pipeline.predict(data[config.FEATURES])
-    response = {'predictions': pred}
+    _logger.info(
+        f"Making prediction with model version: {_version} "
+        f"Inputs: {data} "
+        f"Predictions: {pred}"
+    )
+
+    response = {'predictions': pred, "version": _version}
     return response
 
 
