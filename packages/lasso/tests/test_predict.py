@@ -13,7 +13,7 @@ def test_predict():
     file_name = 'test.csv'
     data = load_dataset(file_name=file_name)
     test_json = data[0:1].to_json(orient='records')
-    test_results = predict.predict(input_data=test_json)
+    test_results = predict.make_prediction(input_data=test_json)
 
     assert test_results is not None
     assert isinstance(test_results['predictions'][0], np.int64)

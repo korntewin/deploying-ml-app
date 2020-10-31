@@ -17,7 +17,7 @@ _logger = logging.getLogger(__name__)
 pipeline = load_pipeline(pipeline_name=model_name)
 
 
-def predict(*, input_data) -> dict:
+def make_prediction(*, input_data) -> dict:
     data = pd.read_json(input_data)
     data = validate_data(data)
 
@@ -32,7 +32,7 @@ def predict(*, input_data) -> dict:
     return response
 
 
-def predict_proba(*, input_data) -> dict:
+def make_prediction_proba(*, input_data) -> dict:
     data = pd.read_json(input_data)
     pred = pipeline.predict_proba(data[config.FEATURES])
     response = {'predictions': pred}
