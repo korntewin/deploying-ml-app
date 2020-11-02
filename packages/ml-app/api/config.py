@@ -1,5 +1,7 @@
 import os
+from pathlib import Path
 
+PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 TEST_FILENAME = 'test.csv'
 
 

@@ -1,9 +1,14 @@
+import json
+
 from flask import Blueprint
 from flask import Blueprint, request
 from flask.json import jsonify
 
 from api.logger_config import get_logger
+from api.validation import validate_inputs
 from lasso.predict import make_prediction
+from api import __version__ as api_version
+from lasso import __version__ as model_version
 
 _logger = get_logger(logger_name=__name__)
 prediction_app = Blueprint('prediction_app', __name__)
@@ -17,10 +22,13 @@ def health() -> str:
 
 
 @prediction_app.route('/v1/predict/lasso', methods=['POST'])
-def make_predict() -> str:
+def make_predict() -> json:
     if request.method == 'POST':
         input_data = request.get_json()
         _logger.info(f'Inputs: {input_data}')
+
+        input_data, errors = validate_inputs(input_data=input_data)
+        _logger.info(f'Validate Inputs: {input_data}')
 
         results = make_prediction(input_data=input_data)
         _logger.info(f'Outputs: {results}')
@@ -30,6 +38,16 @@ def make_predict() -> str:
 
         return jsonify({
             'predictions': predictions,
-            'version': version
+            'version': version,
+            'errors': errors
+        })
+
+
+@prediction_app.route('/version', methods=['GET'])
+def get_version() -> json:
+    if request.method == 'GET':
+        return jsonify({
+            'api_version':api_version,
+            'model_version': model_version
         })
 
