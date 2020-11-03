@@ -13,7 +13,7 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r packages/lasso/requirements.txt
-            export PYTHONPATH=$PYTHONPATH:'/packages/lasso'
+            export PYTHONPATH=$PYTHONPATH:'./packages/lasso'
             py.test -vv packages/lasso/tests
 
   test_ml_api:
@@ -29,8 +29,9 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml-app/requirements.txt
-            export PYTHONPATH=$PYTHONPATH:'/packages/ml-app'
-            py.test -vv packages/ml-app/tests
+            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
+            cd './pakcages/ml-app/tests'
+            py.test -vv .
 
   train_and_publish_model:
     working_directory: ~/project
