@@ -51,3 +51,8 @@ workflows:
   test-all:
     jobs:
       - test_lasso_model
+      - test_ml_api
+      - train_and_publish_model
+      - test_ml_api:
+          requires:
+            - train_and_publish_model
