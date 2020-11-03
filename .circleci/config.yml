@@ -29,6 +29,7 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml-app/requirements.txt
+            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest packages/ml-app/tests
 
   train_and_publish_model:
