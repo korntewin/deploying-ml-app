@@ -29,8 +29,8 @@ jobs:
             . venv/bin/activate
             pip install --upgrade pip
             pip install -r packages/ml-app/requirements.txt
-            echo 'export PYTHONPATH="${PYTHONPATH}:${HOME}/project/packages/ml-app"' >> $BASH_ENV
-            py.test -vv packages/ml-app/tests
+            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
+            pytest -s packages/ml-app/tests
 
   train_and_publish_model:
     working_directory: ~/project
