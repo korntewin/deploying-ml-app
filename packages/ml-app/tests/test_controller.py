@@ -1,8 +1,7 @@
 import json
 
-import api
-from api import config, logger_config
-from api import __version__ as api_version
+from myapi import config, logger_config
+from myapi import __version__ as api_version
 from tests.conftest import flask_test_client
 from lasso.preprocess.data_management import load_dataset
 from lasso import __version__ as model_version

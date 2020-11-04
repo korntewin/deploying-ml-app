@@ -1,7 +1,7 @@
 import pytest
 
-from api import config
-from api.app import create_app
+from myapi import config
+from myapi.app import create_app
 
 
 @pytest.fixture

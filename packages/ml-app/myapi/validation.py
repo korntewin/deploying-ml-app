@@ -9,7 +9,7 @@ from marshmallow import ValidationError
 import numpy as np
 
 from lasso.preprocess.data_management import load_dataset
-from api import config
+from myapi import config
 
 
 class DataSchema(Schema):

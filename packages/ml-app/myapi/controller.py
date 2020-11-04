@@ -4,11 +4,11 @@ from flask import Blueprint
 from flask import Blueprint, request
 from flask.json import jsonify
 
-from api import config
-from api.logger_config import get_logger
-from api.validation import validate_inputs
+from myapi import config
+from myapi.logger_config import get_logger
+from myapi.validation import validate_inputs
 from lasso.predict import make_prediction
-# from api import __version__ as api_version
+# from myapi import __version__ as api_version
 from lasso import __version__ as model_version
 
 _logger = get_logger(logger_name=__name__)
