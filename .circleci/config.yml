@@ -59,7 +59,7 @@ jobs:
       - run:
           name: Publish model
           command: |
-            ./scripts/publish_model.sh packages/lasso/setup.py
+            ./scripts/publish_model.sh packages/lasso
 
 workflows:
   version: 2
