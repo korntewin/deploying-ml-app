@@ -34,7 +34,7 @@ jobs:
           name: Running API tests
           command: |
             pip install -r packages/ml-app/requirements.txt
-            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
+            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app/api'
             pytest -s packages/ml-app/tests
 
   train_and_publish_model:

@@ -52,4 +52,4 @@ N_ITER = 50
 
 
 if __name__ == '__main__':
-    print(FEATURES)
+    print(pathlib.Path(lasso.__file__).resolve())
