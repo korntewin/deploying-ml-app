@@ -15,11 +15,8 @@ from lasso import __version__ as model_version
 
 VERSION_FILENAME = config.PACKAGE_ROOT / 'VERSION'
 
-_logger = logger_config.get_logger(logger_name=__name__)
-
 with open(VERSION_FILENAME, 'r') as version_file:
-    api_version = version_file.read().strip() 
-    _logger.info(f'import version file: {api_version}')
+    api_version = version_file.read().strip()
 
 
 def test_prediction_endpoint(flask_test_client):
