@@ -1,4 +1,13 @@
 version: 2
+
+prepare_venv: &prepare_venv
+  run:
+    name: Create venv
+    command: |
+      python3 -m venv venv
+      source venv/bin/activate
+      pip install --upgrade pip
+
 jobs:
   test_lasso_model:
     working_directory: ~/project
@@ -6,15 +15,13 @@ jobs:
       - image: circleci/python:3.7.9
     steps:
       - checkout
+      - *prepare_venv
       - run:
           name: Runnning ML model tests
           command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
             pip install -r packages/lasso/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/lasso'
-            py.test -vv packages/lasso/tests
+            pytest -s packages/lasso/tests
 
   test_ml_api:
     working_directory: ~/project
@@ -22,12 +29,10 @@ jobs:
       - image: circleci/python:3.7.9
     steps:
       - checkout
+      - *prepare_venv
       - run:
           name: Running API tests
           command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
             pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest -s packages/ml-app/tests
@@ -38,12 +43,10 @@ jobs:
       - image: circleci/python:3.7.9
     steps:
       - checkout
+      - *prepare_venv
       - run:
           name: Running train and publish model
           command: |
-            virtualenv venv
-            . venv/bin/activate
-            pip install --upgrade pip
             pip install -r packages/lasso/requirements.txt
             ./scripts/publish_model.sh packages/lasso/setup.py
 

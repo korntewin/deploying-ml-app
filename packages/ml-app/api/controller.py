@@ -4,7 +4,6 @@ from flask import Blueprint
 from flask import Blueprint, request
 from flask.json import jsonify
 
-import api
 from api.logger_config import get_logger
 from api.validation import validate_inputs
 from lasso.predict import make_prediction
