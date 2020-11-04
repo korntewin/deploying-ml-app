@@ -23,7 +23,7 @@ jobs:
           name: Runnning ML model tests
           command: |
             python3 -m pip install -r packages/lasso/requirements.txt
-            export PYTHONPATH=$PYTHONPATH:'./packages/lasso'
+            PYTHONPATH='./packages/lasso' python3 packages/lasso/lasso/train.py
             pytest -s packages/lasso/tests
 
   test_ml_api:
