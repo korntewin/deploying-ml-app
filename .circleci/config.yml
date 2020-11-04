@@ -55,7 +55,7 @@ jobs:
           name: Train model
           command: |
             python3 -m pip install -r packages/lasso/requirements.txt
-            PYTHONPATH='./packages/lasso' python3 -m packages/lasso/lasso/train.py
+            PYTHONPATH='./packages/lasso' python3 packages/lasso/lasso/train.py
       - run:
           name: Publish model
           command: |
