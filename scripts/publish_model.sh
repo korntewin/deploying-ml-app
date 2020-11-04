@@ -25,7 +25,7 @@ build() {
     python3 $SETUPFILE sdist bdist_wheel || die "Building package $PACKAGE_NAME failed"
 
     for file in `ls dist`;
-        do curl -F package=@dist/${file} ${GEMFURY_URL} || die "Fail to upload ${file} to Gemfury";
+        do curl -F package=@dist/${file} ${GEM_PUSH_URL} || die "Fail to upload ${file} to Gemfury";
     done;
 
 }
