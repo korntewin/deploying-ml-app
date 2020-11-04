@@ -11,7 +11,7 @@ prepare_venv: &prepare_venv
     command: |
       python3 -m venv venv
       source venv/bin/activate
-      pip install --upgrade pip
+      python3 -m pip install --upgrade pip
 
 jobs:
   test_lasso_model:
@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Runnning ML model tests
           command: |
-            pip install -r packages/lasso/requirements.txt
+            python3 -m pip install -r packages/lasso/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/lasso'
             pytest -s packages/lasso/tests
 
@@ -37,7 +37,7 @@ jobs:
       - run:
           name: Running API tests
           command: |
-            pip install -r packages/ml-app/requirements.txt
+            python3 -m pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest -s packages/ml-app/tests
       - save_cache:
@@ -52,9 +52,13 @@ jobs:
       - checkout
       - *prepare_venv
       - run:
-          name: Running train and publish model
+          name: Train model
           command: |
-            pip install -r packages/lasso/requirements.txt
+            python3 -m pip install -r packages/lasso/requirements.txt
+            PYTHONPATH='./packages/lasso' python3 -m packages/lasso/lasso/train.py
+      - run:
+          name: Publish model
+          command: |
             ./scripts/publish_model.sh packages/lasso/setup.py
 
 workflows:

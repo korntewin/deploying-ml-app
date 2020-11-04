@@ -1,3 +1,6 @@
+--extra-index-url=${GEMFURY_URL}
+
 flask==1.0.2
 marshmallow==3.9.0
--e 'packages/lasso'
+
+lasso==0.1.2
