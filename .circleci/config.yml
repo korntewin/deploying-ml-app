@@ -30,9 +30,9 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          key: 
-            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
+      # - restore_cache:
+      #     key: 
+      #       deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
       - *prepare_venv
       - run:
           name: Running API tests
@@ -40,11 +40,11 @@ jobs:
             python3 -m pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest -s packages/ml-app/tests
-      - save_cache:
-          paths:
-            - "venv/"
-          key: 
-            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
+      # - save_cache:
+      #     paths:
+      #       - "venv/"
+      #     key: 
+      #       deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
 
   train_and_publish_model:
     <<: *defaults
