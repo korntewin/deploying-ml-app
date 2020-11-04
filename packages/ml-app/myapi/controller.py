@@ -4,20 +4,15 @@ from flask import Blueprint
 from flask import Blueprint, request
 from flask.json import jsonify
 
-from myapi import config
 from myapi.logger_config import get_logger
 from myapi.validation import validate_inputs
 from lasso.predict import make_prediction
-# from myapi import __version__ as api_version
+from myapi import __version__ as api_version
 from lasso import __version__ as model_version
 
 _logger = get_logger(logger_name=__name__)
 prediction_app = Blueprint('prediction_app', __name__)
 
-VERSION_FILENAME = config.PACKAGE_ROOT / 'VERSION'
-
-with open(VERSION_FILENAME, 'r') as version_file:
-    api_version = version_file.read().strip()
 
 @prediction_app.route('/health', methods=['GET'])
 def health() -> str:

@@ -1,7 +1,7 @@
 import json
 
-from myapi import config, logger_config
-from myapi import _version_ as api_version
+from myapi import config
+from myapi import __version__ as api_version
 from tests.conftest import flask_test_client
 from lasso.preprocess.data_management import load_dataset
 from lasso import __version__ as model_version
@@ -11,11 +11,6 @@ from lasso import __version__ as model_version
 #     response = flask_test_client.get('/health')
 
 #     assert response.status_code == 200
-
-# VERSION_FILENAME = config.PACKAGE_ROOT / 'VERSION'
-
-# with open(VERSION_FILENAME, 'r') as version_file:
-#     api_version = version_file.read().strip()
 
 
 def test_prediction_endpoint(flask_test_client):

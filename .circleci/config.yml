@@ -1,5 +1,10 @@
 version: 2
 
+defaults: &defaults
+  working_directory: ~/project
+  docker:
+    - image: circleci/python:3.7.9
+
 prepare_venv: &prepare_venv
   run:
     name: Create venv
@@ -10,9 +15,7 @@ prepare_venv: &prepare_venv
 
 jobs:
   test_lasso_model:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.9
+    <<: *defaults
     steps:
       - checkout
       - *prepare_venv
@@ -24,11 +27,12 @@ jobs:
             pytest -s packages/lasso/tests
 
   test_ml_api:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.9
+    <<: *defaults
     steps:
       - checkout
+      - restore_cache:
+          key: 
+            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
       - *prepare_venv
       - run:
           name: Running API tests
@@ -36,11 +40,14 @@ jobs:
             pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest -s packages/ml-app/tests
+      - save_cache:
+          paths:
+            - "venv/"
+          key: 
+            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
 
   train_and_publish_model:
-    working_directory: ~/project
-    docker:
-      - image: circleci/python:3.7.9
+    <<: *defaults
     steps:
       - checkout
       - *prepare_venv
