@@ -2,7 +2,6 @@ import logging
 from logging.handlers import TimedRotatingFileHandler
 from logging import StreamHandler
 from logging import Logger
-import os
 from pathlib import Path
 import sys
 
