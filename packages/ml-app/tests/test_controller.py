@@ -1,10 +1,11 @@
 import json
 
+import api
 from api import config
+from api import __version__ as api_version
 from tests.conftest import flask_test_client
 from lasso.preprocess.data_management import load_dataset
 from lasso import __version__ as model_version
-from api import __version__ as api_version
 
 
 # def test_health_endpoint(flask_test_client):
