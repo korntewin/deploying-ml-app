@@ -1,6 +1,5 @@
 
-#
-
+# relative directory to setup.py file
 RELATIVE_DIRS="$@"
 SETUPFILE="setup.py"
 CUR_DIRS=$(pwd)
@@ -22,7 +21,11 @@ build() {
     [ ! -e "$SETUPFILE" ] && warn "There is no $SETUPFILE" && return
     PACKAGE_NAME=$(python3 $SETUPFILE --fullname)
     echo "Package $PACKAGE_NAME"
-    python3 $SETUPFILE sdist bdist_wheel || die "Building package $PACKAGE_NAME failed"
+    python3 $SETUPFILE clean --all bdist_wheel || die "Building package $PACKAGE_NAME failed"
+
+    for file in $(ls dist);
+        do curl -F package=@"dist/$file" ${GEM_PUSH_URL} || die "Fail to upload ${file} to Gemfury";
+    done;
 
 }
 

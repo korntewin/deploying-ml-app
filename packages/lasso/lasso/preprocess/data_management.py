@@ -18,9 +18,8 @@ def load_dataset(*, file_name:str) -> pd.DataFrame:
 
 def save_pipeline(*, pipeline) -> None: 
     saved_name = f'{config.MODEL_NAME}{_version}.pkl'
-    _logger.info(f'save {saved_name}')
+    _logger.info(f'save {config.TRAIN_MODEL_DIR/saved_name}')
     joblib.dump(pipeline, config.TRAIN_MODEL_DIR/saved_name)
-    _logger.info(f'remove other pipeline')
     remove_pipeline(file_to_keep=saved_name)
 
 
@@ -32,5 +31,7 @@ def load_pipeline(*, pipeline_name) -> Pipeline:
 def remove_pipeline(*, file_to_keep) -> None:
 
     for model in config.TRAIN_MODEL_DIR.iterdir():
+        _logger.info(f'found {config.TRAIN_MODEL_DIR/model.name}')
         if model.name not in [file_to_keep, "__init__.py"]:
+            _logger.info(f'remove {model.name}')
             model.unlink()

@@ -11,7 +11,7 @@ prepare_venv: &prepare_venv
     command: |
       python3 -m venv venv
       source venv/bin/activate
-      pip install --upgrade pip
+      python3 -m pip install --upgrade pip
 
 jobs:
   test_lasso_model:
@@ -22,29 +22,29 @@ jobs:
       - run:
           name: Runnning ML model tests
           command: |
-            pip install -r packages/lasso/requirements.txt
-            export PYTHONPATH=$PYTHONPATH:'./packages/lasso'
+            python3 -m pip install -r packages/lasso/requirements.txt
+            PYTHONPATH='./packages/lasso' python3 packages/lasso/lasso/train.py
             pytest -s packages/lasso/tests
 
   test_ml_api:
     <<: *defaults
     steps:
       - checkout
-      - restore_cache:
-          key: 
-            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
+      # - restore_cache:
+      #     key: 
+      #       deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
       - *prepare_venv
       - run:
           name: Running API tests
           command: |
-            pip install -r packages/ml-app/requirements.txt
+            python3 -m pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
             pytest -s packages/ml-app/tests
-      - save_cache:
-          paths:
-            - "venv/"
-          key: 
-            deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
+      # - save_cache:
+      #     paths:
+      #       - "venv/"
+      #     key: 
+      #       deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
 
   train_and_publish_model:
     <<: *defaults
@@ -52,17 +52,20 @@ jobs:
       - checkout
       - *prepare_venv
       - run:
-          name: Running train and publish model
+          name: Train model
           command: |
-            pip install -r packages/lasso/requirements.txt
-            ./scripts/publish_model.sh packages/lasso/setup.py
+            python3 -m pip install -r packages/lasso/requirements.txt
+            PYTHONPATH='./packages/lasso' python3 packages/lasso/lasso/train.py
+      - run:
+          name: Publish model
+          command: |
+            ./scripts/publish_model.sh packages/lasso
 
 workflows:
   version: 2
   test-all:
     jobs:
       - test_lasso_model
-      - test_ml_api
       - train_and_publish_model
       - test_ml_api:
           requires:

@@ -4,12 +4,11 @@ include *.cfg
 include *.pkl
 recursive-include ./lasso/*
 
-include lasso/datasets/train.csv
-include lasso/datasets/test.csv
-include lasso/trained_models/*.pkl
-include lasso/VERSION
+include ./lasso/datasets/train.csv
+include ./lasso/datasets/test.csv
+include ./lasso/trained_models/*
+include ./lasso/VERSION
 
-include ./requirements.txt
 exclude *.log
 
 recursive-exclude * __pycache__
