@@ -56,11 +56,10 @@ jobs:
           command: |
             python3 -m pip install -r packages/lasso/requirements.txt
             PYTHONPATH='./packages/lasso' python3 packages/lasso/lasso/train.py
+      - run:
+          name: Publish model
+          command: |
             ./scripts/publish_model.sh packages/lasso
-      # - run:
-      #     name: Publish model
-      #     command: |
-      #       ./scripts/publish_model.sh packages/lasso
 
 workflows:
   version: 2
