@@ -51,6 +51,7 @@ jobs:
     steps:
       - checkout
       - *prepare_venv
+
       - run:
           name: Capture prev version predictions
           command: |
@@ -84,8 +85,12 @@ workflows:
   test-all:
     jobs:
       - test_lasso_model
-      - test_ml_api
-      - test_diff
+      - test_ml_api:
+          requires:
+            - test_lasso_model
+      - test_diff:
+          requires:
+            - test_lasso_model
       - train_and_publish_model:
           requires:
             - test_lasso_model
