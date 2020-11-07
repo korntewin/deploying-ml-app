@@ -62,7 +62,7 @@ jobs:
           name: Compare current version predictions with capture prev
           command: |
             python3 -m pip install -r packages/ml-app/requirements.txt
-            pytest -s tests -m "differential"
+            pytest -s packages/ml-app/tests -m "differential"
             
   train_and_publish_model:
     <<: *defaults
