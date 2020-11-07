@@ -3,6 +3,8 @@ import json
 import pandas as pd
 import numpy as np
 
+import pytest
+
 from tests.conftest import flask_test_client
 from myapi.config import PACKAGE_ROOT, PREV_VER_PREDS_FILENAME
 from myapi.logger_config import get_logger
@@ -13,6 +15,7 @@ test_dataset = load_dataset(file_name=config.TEST_DATA_FN)
 _logger = get_logger(logger_name=__name__)
 
 
+@pytest.mark.differential
 def test_differential(flask_test_client):
     prev_ver_test_pred = pd.read_csv(PACKAGE_ROOT / PREV_VER_PREDS_FILENAME)
     _logger.info('load previous version test predictions')

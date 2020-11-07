@@ -39,13 +39,31 @@ jobs:
           command: |
             python3 -m pip install -r packages/ml-app/requirements.txt
             export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
-            pytest -s packages/ml-app/tests
+            pytest -s packages/ml-app/tests -m "not differential"
       # - save_cache:
       #     paths:
       #       - "venv/"
       #     key: 
       #       deps-py-{{ checksum "packages/ml-app/requirements.txt" }}
 
+  test_diff:
+    <<: *defaults
+    steps:
+      - checkout
+      - *prepare_venv
+      - run:
+          name: Capture prev version predictions
+          command: |
+            python3 -m pip install -r packages/ml-app/diff_requirements.txt
+            export PYTHONPATH=$PYTHONPATH:'./packages/ml-app'
+            python3 packages/ml-app/tests/capture_pred.py
+
+      - run:
+          name: Compare current version predictions with capture prev
+          command: |
+            python3 -m pip install -r packages/ml-app/requirements.txt
+            pytest -s tests -m "differential"
+            
   train_and_publish_model:
     <<: *defaults
     steps:
@@ -66,7 +84,14 @@ workflows:
   test-all:
     jobs:
       - test_lasso_model
-      - train_and_publish_model
-      - test_ml_api:
+      - test_ml_api
+      - test_diff
+      - train_and_publish_model:
           requires:
-            - train_and_publish_model
+            - test_lasso_model
+            - test_ml_api
+            - test_diff
+          filters:
+            branches:
+              only:
+                - main
