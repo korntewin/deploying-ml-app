@@ -4,6 +4,7 @@ from pathlib import Path
 PACKAGE_ROOT = Path(__file__).resolve().parent.parent
 PREV_VER_PREDS_FILENAME = 'prev_version_preds.csv'
 TEST_FILENAME = 'test.csv'
+ACCETPTABLE_DIFF = 0.05
 
 
 class Config:
