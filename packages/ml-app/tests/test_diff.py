@@ -9,6 +9,7 @@ from tests.conftest import flask_test_client
 from myapi.config import PACKAGE_ROOT, PREV_VER_PREDS_FILENAME, ACCETPTABLE_DIFF
 from myapi.logger_config import get_logger
 from lasso import config
+from lasso.predict import make_prediction_proba
 from lasso.preprocess.data_management import load_dataset
 
 test_dataset = load_dataset(file_name=config.TEST_DATA_FN)
@@ -23,12 +24,16 @@ def test_differential(flask_test_client):
     test_json = test_dataset[111:444].to_json(orient='records')
     _logger.info(f'Test differential Inputs: {test_json}')
     
-    response = flask_test_client.post('/v1/predict_proba/lasso',
-    json = test_json)
-    pred_json = response.data
+    # response = flask_test_client.post('/v1/predict_proba/lasso',
+    # json = test_json)
+    # pred_json = response.data
 
-    pred_dic = json.loads(pred_json)
-    cur_ver_test_pred = pred_dic['predictions']
+    # pred_dic = json.loads(pred_json)
+    # cur_ver_test_pred = pred_dic['predictions']
+
+    test_preds = make_prediction_proba(input_data=test_json)
+    cur_ver_test_pred = test_preds['predictions']
+
     _logger.info(f'Test differential Outputs: {cur_ver_test_pred}')
 
     assert len(prev_ver_test_pred) == len(cur_ver_test_pred)
