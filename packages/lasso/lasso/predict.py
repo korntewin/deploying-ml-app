@@ -1,4 +1,5 @@
 import joblib
+import json
 import logging
 
 import pandas as pd
@@ -17,7 +18,7 @@ _logger = logging.getLogger(__name__)
 pipeline = load_pipeline(pipeline_name=model_name)
 
 
-def make_prediction(*, input_data) -> dict:
+def make_prediction(*, input_data:json) -> dict:
     data = pd.read_json(input_data)
     data = validate_data(data)
 
@@ -28,14 +29,14 @@ def make_prediction(*, input_data) -> dict:
         f"Predictions: {pred}"
     )
 
-    response = {'predictions': pred, "version": _version}
+    response = {'predictions': pred.tolist(), "version": _version}
     return response
 
 
 def make_prediction_proba(*, input_data) -> dict:
     data = pd.read_json(input_data)
     pred = pipeline.predict_proba(data[config.FEATURES])
-    response = {'predictions': pred}
+    response = {'predictions': pred.tolist(), "version":_version}
     return response
 
 

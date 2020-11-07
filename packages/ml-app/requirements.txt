@@ -1,6 +1,6 @@
-# --extra-index-url=${GEMFURY_URL}
---extra-index-url ${GEM_REPO_URL}
 
-lasso==0.2.10
+# install local ml package
+# to compare prev version ml pakcage from gemfury
+-e "packages/lasso/."
 flask==1.0.2
 marshmallow==3.9.0

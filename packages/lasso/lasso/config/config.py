@@ -11,6 +11,7 @@ DATASETS_DIR = ROOT_PATH/'datasets'
 
 # data
 TRAIN_DATA_FN = 'train.csv'
+TEST_DATA_FN = 'test.csv'
 MODEL_NAME = 'full_pipe_model_v'
 
 # variables

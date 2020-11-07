@@ -6,7 +6,7 @@ from flask.json import jsonify
 
 from myapi.logger_config import get_logger
 from myapi.validation import validate_inputs
-from lasso.predict import make_prediction
+from lasso.predict import make_prediction, make_prediction_proba
 from myapi import __version__ as api_version
 from lasso import __version__ as model_version
 
@@ -33,11 +33,33 @@ def make_predict() -> json:
         results = make_prediction(input_data=input_data)
         _logger.info(f'Outputs: {results}')
 
-        predictions = int(results.get('predictions')[0])
+        predictions = results.get('predictions')
         version = results.get('version')
 
         return jsonify({
             'predictions': predictions,
+            'version': version,
+            'errors': errors
+        })
+
+
+@prediction_app.route('/v1/predict_proba/lasso', methods=['POST'])
+def make_predict_proba() -> json:
+    if request.method == 'POST':
+        input_data = request.get_json()
+        # _logger.info(f'Inputs: {input_data}')
+
+        input_data, errors = validate_inputs(input_data=input_data)
+        # _logger.info(f'Validate Inputs: {input_data}')
+
+        results = make_prediction_proba(input_data=input_data)
+        # _logger.info(f'Outputs: {results}')
+
+        predictions = results.get('predictions')
+        version = results.get('version')
+
+        return jsonify({
+            'predictions': list(predictions),
             'version': version,
             'errors': errors
         })
