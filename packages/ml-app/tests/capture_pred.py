@@ -10,7 +10,7 @@ from myapi import config as api_config
 from myapi.logger_config import get_logger
 from myapi.config import PREV_VER_PREDS_FILENAME
 
-test_dataset = load_dataset(file_name=api_config.TEST_DATA_FN)
+test_dataset = load_dataset(file_name=api_config.TEST_FILENAME)
 _logger = get_logger(logger_name=__name__)
 
 
@@ -27,11 +27,5 @@ def capture_prev_ver_predictions():
         predictions: {api_config.PACKAGE_ROOT / api_config.PREV_VER_PREDS_FILENAME}')
 
 
-def temp():
-    prev_ver_test_pred = pd.read_csv(api_config.PACKAGE_ROOT / api_config.PREV_VER_PREDS_FILENAME)
-    print(prev_ver_test_pred.values.tolist())
-
-
 if __name__ == '__main__':
     capture_prev_ver_predictions()
-    temp()
