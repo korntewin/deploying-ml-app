@@ -10,7 +10,7 @@ from myapi import config as api_config
 from myapi.logger_config import get_logger
 from myapi.config import PREV_VER_PREDS_FILENAME
 
-test_dataset = load_dataset(file_name=config.TEST_DATA_FN)
+test_dataset = load_dataset(file_name=api_config.TEST_DATA_FN)
 _logger = get_logger(logger_name=__name__)
 
 
