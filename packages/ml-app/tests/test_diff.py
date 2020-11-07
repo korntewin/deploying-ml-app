@@ -6,7 +6,7 @@ import numpy as np
 import pytest
 
 from tests.conftest import flask_test_client
-from myapi.config import PACKAGE_ROOT, PREV_VER_PREDS_FILENAME
+from myapi.config import PACKAGE_ROOT, PREV_VER_PREDS_FILENAME, ACCETPTABLE_DIFF
 from myapi.logger_config import get_logger
 from lasso import config
 from lasso.preprocess.data_management import load_dataset
@@ -34,6 +34,6 @@ def test_differential(flask_test_client):
     assert len(prev_ver_test_pred) == len(cur_ver_test_pred)
 
     for prev_pred, cur_pred in zip(prev_ver_test_pred.values.tolist(), cur_ver_test_pred):
-        assert np.isclose(prev_pred, cur_pred).all()
+        assert np.isclose(prev_pred, cur_pred, rtol=ACCETPTABLE_DIFF).all()
 
 
