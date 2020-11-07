@@ -16,7 +16,7 @@ def test_predict():
     test_results = predict.make_prediction(input_data=test_json)
 
     assert test_results is not None
-    assert isinstance(test_results['predictions'][0], np.int64)
+    assert isinstance(test_results['predictions'][0], int)
     assert test_results['predictions'][0] <= 1
     assert test_results['predictions'][0] >= 0
 
