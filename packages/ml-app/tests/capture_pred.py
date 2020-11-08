@@ -16,8 +16,6 @@ _logger = get_logger(logger_name=__name__)
 
 def capture_prev_ver_predictions():
     df = test_dataset[111:444].copy()
-    # save to csv
-    df.to_csv('prev_ver_dataset.csv', index=False)
     test_json = df.to_json(orient='records')
     test_preds = make_prediction_proba(input_data=test_json)
 

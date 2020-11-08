@@ -1,0 +1,13 @@
+[{
+    "passengerid":1003,
+    "pclass":3,
+    "name":"Shine, Miss. Ellen Natalia",
+    "sex":"female",
+    "age":null,
+    "sibsp":0,
+    "parch":0,
+    "ticket":"330968",
+    "fare":7.7792,
+    "cabin":null,
+    "embarked":"Q"
+}]

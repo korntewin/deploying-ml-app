@@ -22,8 +22,6 @@ def test_differential(flask_test_client):
     _logger.info('load previous version test predictions')
 
     df = test_dataset[111:444].copy()
-    # save to csv
-    df.to_csv('cur_ver_dataset.csv', index=False)
     test_json = df.to_json(orient='records')
     _logger.info(f'Test differential Inputs: {test_json}')
     

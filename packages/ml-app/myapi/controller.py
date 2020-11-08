@@ -26,6 +26,7 @@ def make_predict() -> json:
     if request.method == 'POST':
         input_data = request.get_json()
         _logger.info(f'Inputs: {input_data}')
+        _logger.info(f'type of Inputs: {type(input_data)}')
 
         input_data, errors = validate_inputs(input_data=input_data)
         _logger.info(f'Validate Inputs: {input_data}')
