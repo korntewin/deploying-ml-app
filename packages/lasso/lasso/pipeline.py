@@ -26,9 +26,7 @@ prep_pipeline = Pipeline([
     ('scaler', pp.Scaler())
 ])
 
-
 estimator_cv = RandomizedSearchCV(LogisticRegression(), config.PARAM_GRIDS, n_iter=config.N_ITER)
-
 
 if __name__ == '__main__':
     train = pd.read_csv('train.csv')

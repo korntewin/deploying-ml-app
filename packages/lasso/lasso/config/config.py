@@ -28,7 +28,7 @@ NUM_COLUMN_NA_NOT_ALLOW = [col for col in NUM_COLUMN if col not in NUM_COLUMN_W_
 CAT_COLUMN_NA_NOT_ALLOW = [col for col in CAT_COLUMN if col not in CAT_COLUMN_W_NA]
 CAT_COLUMN_NA_NOT_ALLOW.remove('title')
 
-TRAIN_FEATURES = list(set(DROP_COLUMN).union(set(CAT_COLUMN)).union(set(NUM_COLUMN)))+['survived']
+TRAIN_FEATURES = ['parch', 'title', 'sex', 'embarked', 'fare', 'body', 'cabin', 'age', 'pclass', 'sibsp', 'home.dest', 'ticket', 'name', 'boat', 'survived']
 TRAIN_FEATURES.remove('title')
 
 FEATURES = [
