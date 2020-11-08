@@ -28,6 +28,11 @@ def make_predict() -> json:
         _logger.info(f'Inputs: {input_data}')
         _logger.info(f'type of Inputs: {type(input_data)}')
 
+        # convert input to string if it is list type
+        if isinstance(input_data, list):
+            input_data = json.dumps(input_data)
+            _logger.info(f'type of Inputs: {type(input_data)}')
+
         input_data, errors = validate_inputs(input_data=input_data)
         _logger.info(f'Validate Inputs: {input_data}')
 
