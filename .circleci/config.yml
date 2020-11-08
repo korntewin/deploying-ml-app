@@ -115,16 +115,18 @@ workflows:
   version: 2
   test-all:
     jobs:
+      - test_lasso_model
+      - test_ml_api
+      - test_diff
       - deploy_to_heroku:
           requires:
-            - train_and_publish_model
+            - test_lasso_model
+            - test_ml_api
+            - test_diff
           filters:
             branches:
               only:
                 -main
-      - test_lasso_model
-      - test_ml_api
-      - test_diff
       # - train_and_publish_model:
       #     requires:
       #       - test_lasso_model
