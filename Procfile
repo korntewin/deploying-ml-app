@@ -1,0 +1,1 @@
+web: gunicorn --pythonpath packages/ml-app --access-logfile - --error-logfile - run:application
