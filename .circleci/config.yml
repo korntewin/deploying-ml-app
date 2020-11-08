@@ -118,7 +118,7 @@ workflows:
       - test_lasso_model
       - test_ml_api
       - test_diff
-      - deploy_to_heroku:
+      - train_and_publish_model:
           requires:
             - test_lasso_model
             - test_ml_api
@@ -126,13 +126,11 @@ workflows:
           filters:
             branches:
               only:
-                -main
-      # - train_and_publish_model:
-      #     requires:
-      #       - test_lasso_model
-      #       - test_ml_api
-      #       - test_diff
-      #     filters:
-      #       branches:
-      #         only:
-      #           - main
+                - main
+      - deploy_to_heroku:
+          requires:
+            - train_and_publish_model
+          filters:
+            branches:
+              only:
+                - main
