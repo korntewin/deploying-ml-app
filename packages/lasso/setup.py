@@ -61,7 +61,7 @@ setup(
     python_requires=REQUIRES_PYTHON,
     url=URL,
     packages=find_packages(exclude=('tests',)),
-    package_data={'lasso': ['VERSION']},
+    package_data={'lasso': ['VERSION','trained_models/*', 'datasets/*']},
     install_requires=list_reqs(),
     extras_require={},
     include_package_data=True,

@@ -38,7 +38,9 @@ def run_training() -> None:
 
     # print reulsts
     print(f'best estimator: {pipeline.estimator_cv.best_estimator_}')
-    print(f'full pipe score: {pipeline.estimator_cv.best_score_}')
+    print(f'best estimator cv score: {pipeline.estimator_cv.best_score_}')
+    print(f'best estimator score: {pipeline.estimator_cv.best_estimator_.score(prep_train, y_train)}')
+    print(f'full pipe score: {full_pipeline.score(X_train, y_train)}')
 
     _logger.info(f"save model version: {_version}")
     save_pipeline(pipeline=full_pipeline)
@@ -46,4 +48,3 @@ def run_training() -> None:
 
 if __name__ == '__main__':
     run_training()
-    
