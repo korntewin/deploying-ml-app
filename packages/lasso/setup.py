@@ -14,7 +14,7 @@ DESCRIPTION = 'Train and deploy lasso model.'
 URL = 'your github project'
 EMAIL = 'your_email@email.com'
 AUTHOR = 'Your name'
-REQUIRES_PYTHON = '>=3.7.0'
+REQUIRES_PYTHON = '>=3.6.0'
 
 
 # What packages are required for this module to be executed?
