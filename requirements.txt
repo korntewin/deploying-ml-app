@@ -1,8 +1,1 @@
-tox
-seaborn
-numpy
-pandas
-sklearn
-jupyter
-ipykernel
-matplotlib
+-r packages/ml-app/requirements.txt
