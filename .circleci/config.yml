@@ -103,18 +103,25 @@ jobs:
 
       - run:
           name: Install API deps with ml locally
-          command:
+          command: |
             python3 -m pip install -r packages/ml-app/requirements.txt
 
       - run:
           name: Deploy to heroku
-          command:
+          command: |
             git push https://heroku:${HEROKU_API_KEY}@git.heroku.com/${HEROKU_APP_NAME}.git main
 
 workflows:
   version: 2
   test-all:
     jobs:
+      - deploy_to_heroku:
+          requires:
+            - train_and_publish_model
+          filters:
+            branches:
+              only:
+                -main
       - test_lasso_model
       - test_ml_api:
           requires:
@@ -131,10 +138,3 @@ workflows:
             branches:
               only:
                 - main
-      - deploy_to_heroku:
-          requires:
-            - train_and_publish_model
-          filters:
-            branches:
-              only:
-                -main
