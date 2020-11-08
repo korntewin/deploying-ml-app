@@ -123,18 +123,14 @@ workflows:
               only:
                 -main
       - test_lasso_model
-      - test_ml_api:
-          requires:
-            - test_lasso_model
-      - test_diff:
-          requires:
-            - test_lasso_model
-      - train_and_publish_model:
-          requires:
-            - test_lasso_model
-            - test_ml_api
-            - test_diff
-          filters:
-            branches:
-              only:
-                - main
+      - test_ml_api
+      - test_diff
+      # - train_and_publish_model:
+      #     requires:
+      #       - test_lasso_model
+      #       - test_ml_api
+      #       - test_diff
+      #     filters:
+      #       branches:
+      #         only:
+      #           - main
