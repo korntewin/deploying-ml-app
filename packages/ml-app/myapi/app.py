@@ -6,7 +6,7 @@ from myapi import config
 _logger = get_logger(logger_name=__name__)
 
 
-def create_app(*, config_object:config.Config) -> None:
+def create_app(*, config_object:config.Config) -> Flask:
     flask_app = Flask('ml-app')
     flask_app.config.from_object(config_object)
     
