@@ -96,8 +96,6 @@ jobs:
       - checkout
       - *prepare_venv
 
-      - setup_remote_docker:
-          docker_layer_caching: true
       - run: 
           name: Prepare docker
           command: |
